@@ -1,3 +1,4 @@
+
 class Entity:
     def __init__(self, id, name):
         self.__id = id
@@ -10,6 +11,7 @@ class Entity:
         return self.__name
 
 
+
 class Student(Entity):
     def __init__(self, id, name, dob):
         super().__init__(id, name)
@@ -19,7 +21,7 @@ class Student(Entity):
         return self.__dob
 
     def list(self):
-        print(f"ID: {self.get_id()}   | Name: {self.get_name()}   | DoB: {self.__dob}")
+        print(f"ID: {self.get_id()}   | Name: {self.get_name()}   | DoB: {self.get_dob()}")
 
 
 class Course(Entity):
@@ -68,7 +70,7 @@ class Management:
             self.courses.append(Course(cid, name))
 
     def input_marks(self):
-        cid = input("Enter course: ")
+        cid = input("Enter Course ID to input marks: ")
 
         found_course = False
         for c in self.courses:
@@ -82,17 +84,23 @@ class Management:
 
         print("\nEnter marks:")
         for s in self.students:
-            val = float(input(f"Mark for {s.get_name()} ({s.get_id()}): "))
+            val = float(input(f"Mark for student {s.get_id()} - {s.get_name()}: "))
             self.marks.append(Mark(cid, s.get_id(), val))
 
 
     def list_courses(self):
         print("\n--- Course list ---")
+        if not self.courses:
+            print("No courses available.")
+            return
         for c in self.courses:
             c.list()
 
     def list_students(self):
         print("\n--- Student list ---")
+        if not self.students:
+            print("No students available.")
+            return
         for s in self.students:
             s.list()
 
@@ -105,7 +113,6 @@ class Management:
 
         print(f"\n--- Marks for course {cid} ---")
         
-        found_marks = False
         for s in self.students:
             student_mark = None
             for m in self.marks:
@@ -114,10 +121,9 @@ class Management:
                     break
             
             if student_mark is not None:
-                print(f"Student {s.get_name()} ({s.get_id()}): {student_mark}")
-                found_marks = True
+                print(f"Student ({s.get_id()}) - {s.get_name()}: {student_mark}")
             else:
-                print(f"Student {s.get_name()} ({s.get_id()}): Not graded")
+                print(f"Student ({s.get_id()}) - {s.get_name()}: Not graded")
 
 
 m = Management()
@@ -147,7 +153,7 @@ while True:
     elif choice == "6":
         m.show_student_marks()
     elif choice == "0":
-        print("Bye!")
+        print("Exiting.")
         break
     else:
         print("Invalid choice, please try again.")
