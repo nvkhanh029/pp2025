@@ -1,35 +1,32 @@
-# 1.student.mark.py
 
 students = []        # list of dicts: { "id": ..., "name": ..., "dob": ... }
 courses = []         # list of dicts: { "id": ..., "name": ... }
 marks = {}           # dict: { course_id: { student_id: mark } }
 
 
-def input_num_students():
-    n = int(input("Enter number of students in the class: "))
+def input_nb_students():
+    n = int(input("Enter number of students: "))
     return n
 
-
-def input_student_info(num_students):
-    for i in range(num_students):
-        print(f"\nStudent {i+1}:")
-        sid = input("ID: ")
-        name = input("Name: ")
+def input_student(nb_students):
+    for i in range(nb_students):
+        print(f"\n--- Student {i+1} ---")
+        sid = input("Student ID: ")
+        name = input("Student Name: ")
         dob = input("Date of birth (dd/mm/yyyy): ")
         student = {"id": sid, "name": name, "dob": dob}
         students.append(student)
 
 
-def input_num_courses():
+def input_nb_courses():
     n = int(input("Enter number of courses: "))
     return n
 
-
-def input_course_info(num_courses):
+def input_course(num_courses):
     for i in range(num_courses):
-        print(f"\nCourse {i+1}:")
-        cid = input("ID: ")
-        name = input("Name: ")
+        print(f"\n--- Course {i+1} ---")
+        cid = input("Course ID: ")
+        name = input("Course name: ")
         course = {"id": cid, "name": name}
         courses.append(course)
 
@@ -37,7 +34,7 @@ def input_course_info(num_courses):
 def select_course():
     if not courses:
         print("No courses available.")
-        return None
+        return
 
     print("\nAvailable courses:")
     for i, c in enumerate(courses):
@@ -48,7 +45,7 @@ def select_course():
         return courses[idx]["id"]
     else:
         print("Invalid selection.")
-        return None
+        return
 
 
 def input_marks(course_id):
@@ -74,21 +71,21 @@ def input_marks(course_id):
 def list_courses():
     print("\n--- Course list ---")
     if not courses:
-        print("No courses.")
+        print("No courses available.")
         return
 
     for c in courses:
-        print(f"ID: {c['id']}, Name: {c['name']}")
+        print(f"ID: {c['id']}   | Name: {c['name']}")
 
 
 def list_students():
     print("\n--- Student list ---")
     if not students:
-        print("No students.")
+        print("No students available.")
         return
 
     for s in students:
-        print(f"ID: {s['id']}, Name: {s['name']}, DoB: {s['dob']}")
+        print(f"ID: {s['id']}   | Name: {s['name']}   | DoB: {s['dob']}")
 
 
 def show_student_marks():
@@ -110,7 +107,7 @@ def show_student_marks():
         if sid in marks[cid  ]:
             print(f"Student {sid} - {s['name']}: {marks[cid][sid]}")
         else:
-            print(f"Student {sid} - {s['name']}: no mark")
+            print(f"Student {sid} - {s['name']}: Not graded")
 
 
 
@@ -128,11 +125,11 @@ def main():
         choice = input("Select an option: ")
 
         if choice == "1":
-            n = input_num_students()
-            input_student_info(n)
+            n = input_nb_students()
+            input_student(n)
         elif choice == "2":
-            n = input_num_courses()
-            input_course_info(n)
+            n = input_nb_courses()
+            input_course(n)
         elif choice == "3":
             cid = select_course()
             if cid is not None:
@@ -144,7 +141,7 @@ def main():
         elif choice == "6":
             show_student_marks()
         elif choice == "0":
-            print("Bye!")
+            print("Exiting.")
             break
         else:
             print("Invalid choice, please try again.")
